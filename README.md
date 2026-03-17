@@ -1,36 +1,42 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# CallDraft - AI Voice Agent for HVAC
 
-## Getting Started
+CallDraft is a real-time AI voice agent designed for HVAC businesses. This prototype features "Sarah," a virtual receptionist for Anderson Heating & Cooling, capable of handling service inquiries and booking requests in real-time.
 
-First, run the development server:
+## Tech Stack
 
+- **Framework**: Next.js 15 (App Router)
+- **Voice Engine**: Vapi (STT + TTS + LLM Orchestration)
+- **UI Components**: Shadcn UI + Lucide Icons
+- **Styling**: Tailwind CSS
+- **Package Manager**: Bun
+
+## Setup Instructions
+
+### 1. Clone & Install
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+bun install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 2. Environment Variables
+Create a `.env.local` file in the root directory and add your Vapi Public Key:
+```bash
+NEXT_PUBLIC_VAPI_PUBLIC_KEY=your_vapi_public_key
+```
+You can find your public key in the [Vapi Dashboard](https://dashboard.vapi.ai).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### 3. Run Locally
+```bash
+bun dev
+```
+Open [http://localhost:3000](http://localhost:3000) to start the conversation.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Features
 
-## Learn More
+- **Real-time Conversation**: Natural, low-latency voice interaction.
+- **Live Transcripts**: Streaming speech-to-text display for both user and agent.
+- **Latency Monitoring**: Visible response time indicator in milliseconds.
+- **Premium UI**: Modern, clean design tailored for a professional HVAC service.
 
-To learn more about Next.js, take a look at the following resources:
+## Why Vapi?
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+I chose **Vapi** for this prototype because it provides the lowest latency and the fastest development cycle for production-grade voice agents. By handling the complex orchestration between STT, LLM (GPT-4o), and TTS in a single managed WebSocket connection, we achieve natural-feeling response times (often < 800ms) which is critical for a high-quality caller experience.

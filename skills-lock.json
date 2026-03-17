@@ -1,0 +1,20 @@
+{
+  "version": 1,
+  "skills": {
+    "create-assistant": {
+      "source": "vapiai/skills",
+      "sourceType": "github",
+      "computedHash": "c0f36aa8178f5c4f944abb66d614703b35a4ceab6699d4adb0e3e4d07cdf8ab1"
+    },
+    "vercel-react-best-practices": {
+      "source": "vercel-labs/agent-skills",
+      "sourceType": "github",
+      "computedHash": "afeca00ac2f492d88fdd010e73d91719a5b57c564bb4a73325b0bd77e11323ab"
+    },
+    "web-design-guidelines": {
+      "source": "vercel-labs/agent-skills",
+      "sourceType": "github",
+      "computedHash": "a6a44d5498f7e8f68289902f3dedfc6f38ae0cee1e96527c80724cf27f727c2a"
+    }
+  }
+}

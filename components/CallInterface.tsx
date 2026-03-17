@@ -13,6 +13,7 @@ export default function CallInterface() {
   const [transcripts, setTranscripts] = useState<TranscriptEntry[]>([]);
   const [latency, setLatency] = useState<number | null>(null);
   const [isSpeaking, setIsSpeaking] = useState(false);
+  const [activeTranscript, setActiveTranscript] = useState<TranscriptEntry | null>(null);
 
   useEffect(() => {
     if (!vapi) return;
@@ -21,14 +22,27 @@ export default function CallInterface() {
     vapi.on("call-end", () => {
       setCallStatus("idle");
       setLatency(null);
+      setActiveTranscript(null);
     });
     vapi.on("speech-start", () => setIsSpeaking(true));
-    vapi.on("speech-end", () => setIsSpeaking(false));
+    vapi.on("speech-end", () => {
+      setIsSpeaking(false);
+      // Optional: Clear active transcript on speech end if it hasn't been finalized
+      setActiveTranscript(null);
+    });
 
     vapi.on("message", (message: any) => {
       if (message.type === "transcript") {
         const { role, transcript, transcriptType } = message;
-        if (transcriptType === "final") {
+        
+        if (transcriptType === "partial") {
+          setActiveTranscript({ 
+            role, 
+            text: transcript, 
+            id: "active-transcript" 
+          });
+        } else if (transcriptType === "final") {
+          setActiveTranscript(null);
           setTranscripts((prev) => [
             ...prev,
             { role, text: transcript, id: Math.random().toString(36).substring(7) },
@@ -71,7 +85,11 @@ export default function CallInterface() {
       <Card className="w-full border-zinc-200 dark:border-zinc-800 shadow-2xl bg-white/90 dark:bg-zinc-900/90 backdrop-blur-xl overflow-hidden transition-all duration-700">
         <StatusHeader callStatus={callStatus} latency={latency} />
         <CardContent className="p-0">
-          <Transcript transcripts={transcripts} callStatus={callStatus} />
+          <Transcript 
+            transcripts={transcripts} 
+            activeTranscript={activeTranscript} 
+            callStatus={callStatus} 
+          />
         </CardContent>
         <CallControls 
           callStatus={callStatus} 
